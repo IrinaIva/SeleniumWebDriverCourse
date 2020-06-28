@@ -51,8 +51,8 @@ namespace csharp_example
 			OpenMainPage();
 			Login("admin", "admin");
 			wait.Until(ExpectedConditions.TitleIs("My Store"));
-			AssertLogin();			
-			ClickAllMenus();	
+			AssertLogin();
+			ClickAllMenus();
 
 		}
 		[Test]
@@ -63,18 +63,105 @@ namespace csharp_example
 			driver.FindElement(By.LinkText("Rubber Ducks")).Click();
 			CheckStickers();
 		}
+		[Test]
+		public void CheckCountriesAndZonesTestPart1()
+		{
+			OpenMainPage();
+			Login("admin", "admin");
+			wait.Until(ExpectedConditions.TitleIs("My Store"));
+			AssertLogin();
+			driver.FindElement(By.LinkText("Countries")).Click();
+			CheckCountriesAndZones();
+
+		}
+		[Test]
+		public void CheckCountriesAndZonesTestPart2()
+		{
+			OpenMainPage();
+			Login("admin", "admin");
+			wait.Until(ExpectedConditions.TitleIs("My Store"));
+			AssertLogin();
+			driver.FindElement(By.LinkText("Geo Zones")).Click();
+			CheckZones();
+
+		}
+		public void CheckZones()
+		{
+			List<string> countries = new List<string>();
+			int countriesCount = driver.FindElements(By.CssSelector(".row")).Count;
+			for (int i = 1; i < countriesCount + 1; i++)
+			{
+				driver.FindElement(By.XPath("(//td[@id='content']//*[@class='row'])[" + i + "]//td[5]")).Click();
+				CheckZonesList2();
+				driver.FindElement(By.LinkText("Geo Zones")).Click();
+			}
+		}
+		public void CheckCountriesAndZones()
+		{
+			List<string> countries = new List<string>();
+			List<string> countriesWithZones = new List<string>();
+			int countriesCount = driver.FindElements(By.CssSelector(".row")).Count;
+			for (int i = 1; i < countriesCount + 1; i++)
+			{
+				string country = driver.FindElement(By.XPath("(//td[@id='content']//*[@class='row'])[" + i + "]//td[5]")).Text;
+				countries.Add(country);
+				int countOfZones = Convert.ToInt32(driver.FindElement(By.XPath("(//td[@id='content']//*[@class='row'])[" + i + "]//td[6]")).Text);
+				if (countOfZones > 0) countriesWithZones.Add(country);
+			}
+			IsInAlphabOrder(countries);
+
+			for (int k = 1; k < countriesWithZones.Count + 1; k++)
+			{
+				driver.FindElement(By.LinkText(countriesWithZones[k - 1])).Click();
+				Thread.Sleep(500);
+				CheckZonesList();
+				driver.FindElement(By.LinkText("Countries")).Click();
+			}
+		}
+		public void CheckZonesList()
+		{
+			List<string> zones = new List<string>();
+			int zonesCount = driver.FindElements(By.XPath("//*[@id='table-zones']//tr//td[3][normalize-space()]")).Count;
+
+			for (int l = 1; l < zonesCount + 1; l++)
+			{
+				string zone = driver.FindElement(By.XPath("//*[@id='table-zones']//tr[" + l + "+1]//td[3]")).Text;
+				zones.Add(zone);
+
+			}
+			IsInAlphabOrder(zones);
+		}
+		public void CheckZonesList2()
+		{
+			List<string> zones2 = new List<string>();
+			int zonesCount2 = driver.FindElements(By.XPath("//*[@id='table-zones']//tr//td[3]//*[@selected='selected']")).Count;
+
+			for (int n = 1; n < zonesCount2 + 1; n++)
+			{
+				string zone2 = driver.FindElement(By.XPath("//*[@id='table-zones']//tr[" + n + "+1]//td[3]//*[@selected='selected']")).Text;
+				zones2.Add(zone2);
+
+			}
+			IsInAlphabOrder(zones2);
+		}
+		public void IsInAlphabOrder(List<string> list)
+		{
+			List<string> list2 = list;
+			list2.Sort();
+			CollectionAssert.AreEqual(list, list2);
+		}
 		public void CheckStickers()
 		{
 			int count = driver.FindElements(By.CssSelector(".product")).Count;
 			List<string> asserts = new List<string>();
-			
+
 			for (int i = 1; i < count + 1; i++)
 			{
-				int stickerCount = driver.FindElements(By.XPath("(//li[starts-with(@class,'product')])[" + i + "]//*[starts-with(@class,'sticker')]")).Count;				
+				int stickerCount = driver.FindElements(By.XPath("(//li[starts-with(@class,'product')])[" + i + "]//*[starts-with(@class,'sticker')]")).Count;
 				//bool assert = IsElementPresent(By.XPath("(//li[starts-with(@class,'product')])[" + i + "]//*[starts-with(@class,'sticker')]"));
-				if (stickerCount !=1) asserts.Add(Convert.ToString(i));
+				if (stickerCount != 1) asserts.Add(Convert.ToString(i));
 			}
-			if (asserts.Count>1 ) Assert.Fail("Not all the items have one sticker. Count of failed items - " + asserts.Count);
+			if (asserts.Count > 1) Assert.Fail("Not all the items have one sticker. Count of failed items - " + asserts.Count);
 
 		}
 		public void ClickAllMenus()
@@ -82,7 +169,7 @@ namespace csharp_example
 			int count = driver.FindElements(By.CssSelector("#app- .name")).Count;
 			List<string> asserts = new List<string>();
 			for (int i = 1; i < count + 1; i++)
-			{				
+			{
 				driver.FindElement(By.XPath("(//li[@id='app-']/a/span[2])[" + i + "]")).Click();
 				//	Assert.IsTrue(IsElementPresent(By.XPath("//*[@id='content']//[starts-with(@class,'fa-stack')]")));
 				bool assert = IsElementPresent(By.CssSelector("h1"));
@@ -92,15 +179,14 @@ namespace csharp_example
 				{
 					for (int j = 1; j < count2 + 1; j++)
 					{
-						driver.FindElement(By.XPath("//li[starts-with(@id,'doc-')]["+j+"]")).Click();
+						driver.FindElement(By.XPath("//li[starts-with(@id,'doc-')][" + j + "]")).Click();
 						bool assert2 = IsElementPresent(By.CssSelector("h1"));
 						if (assert == false) asserts.Add(Convert.ToString(j));
 					}
-				}			
+				}
 			}
 			if (asserts.Count > 0) Assert.Fail("Title is missing. Count of failed pages - " + asserts.Count);
 		}
-
 		public void OpenMainPage()
 		{
 			driver.Url = "http://localhost/litecart/admin";
