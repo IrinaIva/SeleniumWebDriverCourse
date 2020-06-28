@@ -55,29 +55,61 @@ namespace csharp_example
 			ClickAllMenus();	
 
 		}
+		[Test]
+		public void CheckStickersTest()
+		{
+			OpenUserPage();
+			Thread.Sleep(500);
+			driver.FindElement(By.LinkText("Rubber Ducks")).Click();
+			CheckStickers();
+		}
+		public void CheckStickers()
+		{
+			int count = driver.FindElements(By.CssSelector(".product")).Count;
+			List<string> asserts = new List<string>();
+			
+			for (int i = 1; i < count + 1; i++)
+			{
+				int stickerCount = driver.FindElements(By.XPath("(//li[starts-with(@class,'product')])[" + i + "]//*[starts-with(@class,'sticker')]")).Count;				
+				//bool assert = IsElementPresent(By.XPath("(//li[starts-with(@class,'product')])[" + i + "]//*[starts-with(@class,'sticker')]"));
+				if (stickerCount !=1) asserts.Add(Convert.ToString(i));
+			}
+			if (asserts.Count>1 ) Assert.Fail("Not all the items have one sticker. Count of failed items - " + asserts.Count);
+
+		}
 		public void ClickAllMenus()
 		{
 			int count = driver.FindElements(By.CssSelector("#app- .name")).Count;
+			List<string> asserts = new List<string>();
 			for (int i = 1; i < count + 1; i++)
 			{				
 				driver.FindElement(By.XPath("(//li[@id='app-']/a/span[2])[" + i + "]")).Click();
-				IsElementPresent(By.CssSelector(".fa - stack icon - wrapper"));
+				//	Assert.IsTrue(IsElementPresent(By.XPath("//*[@id='content']//[starts-with(@class,'fa-stack')]")));
+				bool assert = IsElementPresent(By.CssSelector("h1"));
+				if (assert == false) asserts.Add(Convert.ToString(i));
 				int count2 = driver.FindElements(By.CssSelector("[id^='doc-']")).Count;
 				if (count2 > 0)
 				{
 					for (int j = 1; j < count2 + 1; j++)
 					{
 						driver.FindElement(By.XPath("//li[starts-with(@id,'doc-')]["+j+"]")).Click();
-						IsElementPresent(By.CssSelector(".fa - stack icon - wrapper"));
+						bool assert2 = IsElementPresent(By.CssSelector("h1"));
+						if (assert == false) asserts.Add(Convert.ToString(j));
 					}
 				}			
 			}
+			if (asserts.Count > 0) Assert.Fail("Title is missing. Count of failed pages - " + asserts.Count);
 		}
 
 		public void OpenMainPage()
 		{
 			driver.Url = "http://localhost/litecart/admin";
 			wait.Until(ExpectedConditions.TitleIs("My Store"));
+		}
+		public void OpenUserPage()
+		{
+			driver.Url = "http://localhost/litecart/";
+			wait.Until(ExpectedConditions.TitleIs("Online Store | My Store"));
 		}
 		public void Login(string id, string password)
 		{
