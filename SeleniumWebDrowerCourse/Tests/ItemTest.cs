@@ -31,16 +31,15 @@ namespace SeleniumTests
 			string itemName = driver.FindElement(By.CssSelector("#box-campaigns .product .name")).Text;
 			string regularPrice = driver.FindElement(By.CssSelector("#box-campaigns .product .regular-price")).Text;
 			string regularPriceColor = driver.FindElement(By.CssSelector("#box-campaigns .product .regular-price")).GetCssValue("color");
-			string regularPriceLine = driver.FindElement(By.CssSelector("#box-campaigns .product .regular-price")).GetCssValue("text-decoration-line");
+			string regularPriceLine = driver.FindElement(By.CssSelector("#box-campaigns .product .regular-price")).GetCssValue("text-decoration-line");// Not supported on IE
 			string regularPriceFontSize = driver.FindElement(By.CssSelector("#box-campaigns .product .regular-price")).GetCssValue("font-size");
 			int regularPriceFontWeight = Convert.ToInt32(driver.FindElement(By.CssSelector("#box-campaigns .product .regular-price")).GetCssValue("font-weight"));
 			string campaignPrice = driver.FindElement(By.CssSelector("#box-campaigns .product .campaign-price")).Text;
 			string campaignPriceColor = driver.FindElement(By.CssSelector("#box-campaigns .product .campaign-price")).GetCssValue("color");
 			int campaignPriceFontWeight = Convert.ToInt32(driver.FindElement(By.CssSelector("#box-campaigns .product .campaign-price")).GetCssValue("font-weight"));
 			string campaignPriceFontSize = driver.FindElement(By.CssSelector("#box-campaigns .product .campaign-price")).GetCssValue("font-size");
-			string campaignPriceFontLine = driver.FindElement(By.CssSelector("#box-campaigns .product .campaign-price")).GetCssValue("text-decoration-line");
+			string campaignPriceFontLine = driver.FindElement(By.CssSelector("#box-campaigns .product .campaign-price")).GetCssValue("text-decoration-line");// Not supported on IE
 
-			//return (text.Substring(text.IndexOf("'") + 1, (text.LastIndexOf("'") - text.IndexOf("'") - 1)));
 			string r11 = regularPriceColor.Substring(regularPriceColor.IndexOf("(") + 1, 3);
 			string g11 = regularPriceColor.Substring(regularPriceColor.IndexOf("(") + 6, 3);
 			string b11 = regularPriceColor.Substring(regularPriceColor.IndexOf("(") + 11, 3);
@@ -60,8 +59,8 @@ namespace SeleniumTests
 			double regularPriceFontSizeInt = Convert.ToDouble(regularPriceFontSize.Substring(0, regularPriceFontSize.Length-2));
 			double campaignPriceFontSizeInt = Convert.ToDouble(campaignPriceFontSize.Substring(0, campaignPriceFontSize.Length - 2));
 
-			Assert.AreEqual(regularPriceLine, "line-through");
-			Assert.AreEqual(campaignPriceFontLine, "none");
+			Assert.AreEqual(regularPriceLine, "line-through");// Not supported on IE
+			Assert.AreEqual(campaignPriceFontLine, "none");// Not supported on IE
 			Assert.AreEqual(regularPriceFontWeight, 400);
 			Assert.IsTrue(campaignPriceFontWeight>=700);
 			Assert.IsTrue(regularPriceFontSizeInt < campaignPriceFontSizeInt);
@@ -74,16 +73,16 @@ namespace SeleniumTests
 			string itemName2 = driver.FindElement(By.CssSelector("#box-product .title")).Text;
 			string regularPrice2 = driver.FindElement(By.CssSelector("#box-product .content .regular-price")).Text;
 			string regularPriceColor2 = driver.FindElement(By.CssSelector("#box-product .content .regular-price")).GetCssValue("color");
-			string regularPriceLine2 = driver.FindElement(By.CssSelector("#box-product .content .regular-price")).GetCssValue("text-decoration-line");
+			string regularPriceLine2 = driver.FindElement(By.CssSelector("#box-product .content .regular-price")).GetCssValue("text-decoration-line");// Not supported on IE
 			string regularPriceFontSize2 = driver.FindElement(By.CssSelector("#box-product .content .regular-price")).GetCssValue("font-size");
 			int regularPriceFontWeight2 = Convert.ToInt32(driver.FindElement(By.CssSelector("#box-product .content .regular-price")).GetCssValue("font-weight"));
 			string campaignPrice2 = driver.FindElement(By.CssSelector("#box-product .content .campaign-price")).Text;
 			string campaignPriceColor2 = driver.FindElement(By.CssSelector("#box-product .content .campaign-price")).GetCssValue("color");
 			int campaignPriceFontWeight2 = Convert.ToInt32(driver.FindElement(By.CssSelector("#box-product .content .campaign-price")).GetCssValue("font-weight"));
 			string campaignPriceFontSize2 = driver.FindElement(By.CssSelector("#box-product .content .campaign-price")).GetCssValue("font-size");
-			string campaignPriceFontLine2 = driver.FindElement(By.CssSelector("#box-product .content .campaign-price")).GetCssValue("text-decoration-line");
+			string campaignPriceFontLine2 = driver.FindElement(By.CssSelector("#box-product .content .campaign-price")).GetCssValue("text-decoration-line");// Not supported on IE
 
-			
+
 			string r21 = regularPriceColor2.Substring(regularPriceColor2.IndexOf("(") + 1, 3);
 			string g21 = regularPriceColor2.Substring(regularPriceColor2.IndexOf("(") + 6, 3);
 			string b21 = regularPriceColor2.Substring(regularPriceColor2.IndexOf("(") + 11, 3);
@@ -105,12 +104,12 @@ namespace SeleniumTests
 			double campaignPriceFontSizeInt2 = Convert.ToDouble(campaignPriceFontSize2.Substring(0, campaignPriceFontSize2.Length - 2));
 			Assert.AreEqual(itemName,itemName2);
 			Assert.AreEqual(regularPrice2, regularPrice);
-			Assert.AreEqual(regularPriceLine2, regularPriceLine);			
+			Assert.AreEqual(regularPriceLine2, regularPriceLine);// Not supported on IE			
 			Assert.AreEqual(regularPriceFontWeight2, regularPriceFontWeight);
 			Assert.AreEqual(campaignPrice2, campaignPrice);			
 			Assert.IsTrue(campaignPriceFontSizeInt2 > regularPriceFontSizeInt2);
 			Assert.IsTrue(campaignPriceFontWeight2 >= 700);
-			Assert.AreEqual(campaignPriceFontLine2, campaignPriceFontLine);
+			Assert.AreEqual(campaignPriceFontLine2, campaignPriceFontLine);// Not supported on IE
 		}
 
 
