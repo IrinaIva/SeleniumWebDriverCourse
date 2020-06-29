@@ -16,10 +16,10 @@ using System.IO;
 using System.Reflection;
 
 
-namespace csharp_example
+namespace SeleniumTests
 {
 	[TestFixture]
-	public class MyFirstTest
+	public partial class SeleniumTests
 	{
 		private IWebDriver driver;
 		private WebDriverWait wait;
@@ -29,9 +29,11 @@ namespace csharp_example
 		{
 
 
-			var o = new ChromeOptions();
-			o.AddArgument("-disable-features=RendererCodeIntegrity");
-			driver = new ChromeDriver(o);
+			//var o = new ChromeOptions();
+			//o.AddArgument("-disable-features=RendererCodeIntegrity");
+			//driver = new ChromeDriver(o);
+			//driver = new FirefoxDriver();
+			driver = new InternetExplorerDriver();
 			driver.Manage().Window.Maximize();
 			wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 		}

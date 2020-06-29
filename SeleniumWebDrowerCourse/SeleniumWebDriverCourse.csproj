@@ -60,7 +60,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Test1LogIn.cs" />
+    <Compile Include="Tests\ItemTest.cs" />
+    <Compile Include="Tests\HW1-9Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
