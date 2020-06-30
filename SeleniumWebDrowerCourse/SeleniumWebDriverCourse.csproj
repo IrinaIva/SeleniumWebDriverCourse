@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RegisterNewUser.cs" />
     <Compile Include="Tests\ItemTest.cs" />
     <Compile Include="Tests\HW1-9Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

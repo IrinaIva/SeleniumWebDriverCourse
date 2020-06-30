@@ -29,11 +29,12 @@ namespace SeleniumTests
 		{
 
 
-			//var o = new ChromeOptions();
-			//o.AddArgument("-disable-features=RendererCodeIntegrity");
-			//driver = new ChromeDriver(o);
+			var o = new ChromeOptions();
+			o.AddArgument("-disable-features=RendererCodeIntegrity");
+			driver = new ChromeDriver(o);
 			//driver = new FirefoxDriver();
-			driver = new InternetExplorerDriver();
+			/*driver = new InternetExplorerDriver()*/
+			;
 			driver.Manage().Window.Maximize();
 			wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 		}
@@ -210,7 +211,7 @@ namespace SeleniumTests
 		}
 		public void AssertLogin()
 		{
-			Assert.IsFalse(IsElementPresent(By.CssSelector(".fa-sign-out[")));
+			Assert.IsFalse(IsElementPresent(By.CssSelector(".fa-sign-out")));
 		}
 		public void Logout()
 		{
