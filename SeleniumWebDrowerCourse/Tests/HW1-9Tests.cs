@@ -211,7 +211,7 @@ namespace SeleniumTests
 		}
 		public void AssertLogin()
 		{
-			Assert.IsFalse(IsElementPresent(By.CssSelector(".fa-sign-out")));
+			Assert.IsTrue(IsElementPresent(By.CssSelector(".fa-sign-out")));
 		}
 		public void Logout()
 		{
