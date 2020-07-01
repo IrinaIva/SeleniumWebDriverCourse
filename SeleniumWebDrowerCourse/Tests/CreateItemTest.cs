@@ -111,7 +111,7 @@ namespace SeleniumTests
 		protected void LoadImage(By locator)
 		{
 			IWebElement element = driver.FindElement(locator);
-			string path = Path.GetFullPath(@"..\..\SeleniumWebDrowerCourse\bin\Debug\Cup.jpg");
+			string path = Path.GetFullPath(@"..\..\SeleniumWebDrowerCourse\Cup.jpg");
 			element.SendKeys(path);
 			Thread.Sleep(500);
 		}
