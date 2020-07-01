@@ -200,6 +200,13 @@ namespace SeleniumTests
 			driver.Url = "http://localhost/litecart/";
 			wait.Until(ExpectedConditions.TitleIs("Online Store | My Store"));
 		}
+		public void OpenUserPage2()
+		{
+			driver.Url = "https://litecart.stqa.ru/";
+			wait.Until(ExpectedConditions.TitleIs("Online Store | My store"));
+		}
+
+		//https://litecart.stqa.ru/en/
 		public void Login(string id, string password)
 		{
 			driver.FindElement(By.Name("username")).SendKeys(id);
