@@ -24,20 +24,25 @@ namespace SeleniumTests
 
 		[Test]
 		public void CountryLinksTest()
-		{			
+		{
 			OpenMainPage();
 			Login("admin", "admin");
 			wait.Until(d => driver.FindElement(By.CssSelector(".fa-sign-out")));
 			OpenCerateCountryPage();
 			string MainCountryPage = driver.CurrentWindowHandle;
-			
-			CheckWindow(By.CssSelector("a:nth-child(4) > .fa-external-link"), MainCountryPage, "ISO 3166-1 alpha-2 - Wikipedia");
-			CheckWindow(By.CssSelector("tr:nth-child(3) .fa"), MainCountryPage, "ISO 3166-1 alpha-3 - Wikipedia");
-			CheckWindow(By.CssSelector("tr:nth-child(6) .fa"), MainCountryPage, "Regular expression - Wikipedia");
-			CheckWindow(By.CssSelector("a:nth-child(3) > .fa-external-link"), MainCountryPage, "International Address Format Validator: Verify Mailing Formats | Informatica");
-			CheckWindow(By.CssSelector("tr:nth-child(8) .fa"), MainCountryPage, "Regular expression - Wikipedia");
-			CheckWindow(By.CssSelector("tr:nth-child(9) .fa"), MainCountryPage, "List of countries and capitals with currency and language - Wikipedia");
-			CheckWindow(By.CssSelector("tr:nth-child(10) .fa"), MainCountryPage, "List of country calling codes - Wikipedia");
+			CheckLink(MainCountryPage);
+		}
+
+		public void CheckLink(string MainCountryPage)
+		{
+			int countOfLines = driver.FindElements(By.XPath("//td[@id='content']//form/table[1]//tr")).Count;						
+			for (int q = 1; q < countOfLines + 1; q++)
+			{
+				if (IsElementPresent(By.XPath("(//td[@id='content']//form/table[1]//tr)["+q+ "]//*[@class='fa fa-external-link']"))==true)				
+				{
+					CheckWindow(By.XPath("(//td[@id='content']//table/tbody/tr)[" + q + "]//*[@class='fa fa-external-link']"), MainCountryPage);
+				}
+			}
 		}
 		public void OpenCerateCountryPage()
 		{
@@ -45,18 +50,17 @@ namespace SeleniumTests
 			Click(By.LinkText("Add New Country"));
 		}
 		public string ThereIsWindowOtherThan(ICollection<string> list)
-		{			
+		{
 			ICollection<string> allWindows = driver.WindowHandles;
-			ICollection<string> newWindow =allWindows.Except(list).ToList();			
-			return newWindow.First();	
+			ICollection<string> newWindow = allWindows.Except(list).ToList();
+			return newWindow.First();
 		}
-		public void CheckWindow(By findLocator, string mainW, string assertTitle)
+		public void CheckWindow(By findLocator, string mainW)
 		{
 			ICollection<string> oldWindows = driver.WindowHandles;
 			Click(findLocator);
 			string codeWindow = wait.Until(d => ThereIsWindowOtherThan(oldWindows));
-			SwitchTo(codeWindow);
-			wait.Until(ExpectedConditions.TitleIs(assertTitle));
+			SwitchTo(codeWindow);			
 			driver.Close();
 			SwitchTo(mainW);
 			Thread.Sleep(500);
