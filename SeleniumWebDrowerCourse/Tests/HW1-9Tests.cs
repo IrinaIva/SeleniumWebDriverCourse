@@ -33,9 +33,8 @@ namespace SeleniumTests
 			o.AddArgument("-disable-features=RendererCodeIntegrity");
 			driver = new ChromeDriver(o);
 			//driver = new FirefoxDriver();
-			/*driver = new InternetExplorerDriver()*/
-			;
-			driver.Manage().Window.Maximize();
+			/*driver = new InternetExplorerDriver()*/			
+			driver.Manage().Window.Maximize();		
 			wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 		}
 

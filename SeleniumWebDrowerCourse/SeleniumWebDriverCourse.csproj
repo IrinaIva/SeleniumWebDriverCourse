@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tests\BasketTest.cs" />
+    <Compile Include="Tests\CountriesLinksTest.cs" />
     <Compile Include="Tests\CreateItemTest.cs" />
     <Compile Include="Tests\RegisterNewUser.cs" />
     <Compile Include="Tests\ItemTest.cs" />
